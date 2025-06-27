@@ -12,17 +12,20 @@ importers:
         specifier: ^1.3.22
         version: 1.3.22(zod@3.25.67)
       '@mastra/core':
-        specifier: ^0.10.6
-        version: 0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
+        specifier: ^0.10.8
+        version: 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
       '@mastra/libsql':
         specifier: ^0.10.3
-        version: 0.10.3(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))
+        version: 0.10.3(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))
       '@mastra/loggers':
         specifier: ^0.10.2
-        version: 0.10.2(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))
+        version: 0.10.2(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))
       '@mastra/memory':
         specifier: ^0.10.4
-        version: 0.10.4(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(react@19.1.0)
+        version: 0.10.4(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(react@19.1.0)
+      '@mastra/pg':
+        specifier: ^0.12.0
+        version: 0.12.0(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(pg-query-stream@4.8.1(pg@8.14.1))
       zod:
         specifier: ^3.25.67
         version: 3.25.67
@@ -32,7 +35,7 @@ importers:
         version: 24.0.3
       mastra:
         specifier: ^0.10.6
-        version: 0.10.6(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(@opentelemetry/api@1.9.0)(react@19.1.0)(typescript@5.8.3)
+        version: 0.10.6(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(@opentelemetry/api@1.9.0)(react@19.1.0)(typescript@5.8.3)
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -544,8 +547,8 @@ packages:
     resolution: {integrity: sha512-qC72D4+CDdjGqJvkFMMEAtancHUQ7/d/tAiHf64z8MopFDmcrtbcJuerDtFceuAfQJ2pDSfCKCtbqoGBNnwg0w==}
     engines: {node: '>=8'}
 
-  '@mastra/core@0.10.6':
-    resolution: {integrity: sha512-HBh3VKidTGCTXiLm8K9ZUOIEmqBBbqRtjdPfuJ9FyJVc+JIHXL4/qUVsiyYtKJDpPP6voUkmEieQgo4pk9VFVw==}
+  '@mastra/core@0.10.8':
+    resolution: {integrity: sha512-FR8yQwx/wDDY0E4BOGW/vcqt/DtZtDxmsfOVpMuuu/QVdDzCX2g7LXTeKoduMb0RQT1f5//Rpvi8A7+dJrPmMw==}
     engines: {node: '>=20'}
     peerDependencies:
       zod: ^3.0.0
@@ -576,8 +579,13 @@ packages:
     peerDependencies:
       '@mastra/core': '>=0.10.4-0 <0.11.0'
 
-  '@mastra/schema-compat@0.10.2':
-    resolution: {integrity: sha512-QCPnD0Jd7NJgfVdvNkLPJhqSjyNcA+eaa16N+3kwa+wTBMb6eziWZC1aQNQ6o4T1JVPoo5unVVtL1pqiIgV+tA==}
+  '@mastra/pg@0.12.0':
+    resolution: {integrity: sha512-kvPsodrP+Vdl6FpzXNGP73E0kK3Fog/Fuk4uTYgXOJQjYG8ab3WLBaC+GvL2Knxkfxzc/jjY0pSa/FFusONVjg==}
+    peerDependencies:
+      '@mastra/core': '>=0.10.7-0 <0.11.0-0'
+
+  '@mastra/schema-compat@0.10.3':
+    resolution: {integrity: sha512-ro8mp2TqZMp6J2VEnbCBxofUdmQ9kqdCDOHXuI3KiKoUVwohRBaQ+QoJYYKVmvyjQ69gblGaLdxre9OfB2V40Q==}
     peerDependencies:
       ai: ^4.0.0
       zod: ^3.0.0
@@ -1660,6 +1668,13 @@ packages:
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
 
+  assert-options@0.8.3:
+    resolution: {integrity: sha512-s6v4HnA+vYSGO4eZX+F+I3gvF74wPk+m6Z1Q3w1Dsg4Pnv/R24vhKAasoMVZGvDpOOfTg1Qz4ptZnEbuy95XsQ==}
+    engines: {node: '>=14.0.0'}
+
+  async-mutex@0.5.0:
+    resolution: {integrity: sha512-1A94B18jkJ3DYq284ohPxoXbfTA5HsQ7/Mf4DEhcyLx3Bz27Rh59iScbB6EPiP+B+joue6YCxcMXSbFC1tZKwA==}
+
   async@2.6.4:
     resolution: {integrity: sha512-mzo5dfJYwAn29PeiJ0zvwTo04zj8HDJj0Mn8TD7sno7q12prdbnasKJHhkm2c1LgrhlJ0teaea8860oxi51mGA==}
 
@@ -2615,21 +2630,50 @@ packages:
   pg-connection-string@2.9.1:
     resolution: {integrity: sha512-nkc6NpDcvPVpZXxrreI/FOtX3XemeLl8E0qFr6F2Lrm/I8WOnaWNhIPK2Z7OHpw7gh5XJThi6j6ppgNoaT1w4w==}
 
+  pg-cursor@2.15.2:
+    resolution: {integrity: sha512-34QPprl24V91kfXk/zQkHMAQjNfBYB9Ts92R+vE/Ci4GSvm6Due/bTlVF3V8Gw6aLDdvjXCyOJFT2eorxVY0Xg==}
+    peerDependencies:
+      pg: ^8
+
   pg-int8@1.0.1:
     resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
     engines: {node: '>=4.0.0'}
+
+  pg-minify@1.7.0:
+    resolution: {integrity: sha512-kFPxAWAhPMvOqnY7klP3scdU5R7bxpAYOm8vGExuIkcSIwuFkZYl4C4XIPQ8DtXY2NzVmAX1aFHpvFSXQ/qQmA==}
+    engines: {node: '>=14.0.0'}
 
   pg-pool@3.10.1:
     resolution: {integrity: sha512-Tu8jMlcX+9d8+QVzKIvM/uJtp07PKr82IUOYEphaWcoBhIYkoHpLXN3qO59nAI11ripznDsEzEv8nUxBVWajGg==}
     peerDependencies:
       pg: '>=8.0'
 
+  pg-promise@11.14.0:
+    resolution: {integrity: sha512-x/HZ6hK0MxYllyfUbmN/XZc7JBYoow7KElyNW9hnlhgRHMiRZmRUtfNM/wcuElpjSoASPxkoIKi4IA5QlwOONA==}
+    engines: {node: '>=14.0'}
+    peerDependencies:
+      pg-query-stream: 4.8.1
+
   pg-protocol@1.10.2:
     resolution: {integrity: sha512-Ci7jy8PbaWxfsck2dwZdERcDG2A0MG8JoQILs+uZNjABFuBuItAZCWUNz8sXRDMoui24rJw7WlXqgpMdBSN/vQ==}
+
+  pg-query-stream@4.8.1:
+    resolution: {integrity: sha512-kZo6C6HSzYFF6mlwl+etDk5QZD9CMdlHUXpof6PkK9+CHHaBLvOd2lZMwErOOpC/ldg4thrAojS8sG1B8PZ9Yw==}
+    peerDependencies:
+      pg: ^8
 
   pg-types@2.2.0:
     resolution: {integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==}
     engines: {node: '>=4'}
+
+  pg@8.14.1:
+    resolution: {integrity: sha512-0TdbqfjwIun9Fm/r89oB7RFQ0bLgduAhiIqIXOsyKoiC/L54DbuAAzIEN/9Op0f1Po9X7iCPXGoa/Ah+2aI8Xw==}
+    engines: {node: '>= 8.0.0'}
+    peerDependencies:
+      pg-native: '>=3.0.1'
+    peerDependenciesMeta:
+      pg-native:
+        optional: true
 
   pg@8.16.2:
     resolution: {integrity: sha512-OtLWF0mKLmpxelOt9BqVq83QV6bTfsS0XLegIeAKqKjurRnRKie1Dc1iL89MugmSLhftxw6NNCyZhm1yQFLMEQ==}
@@ -2941,6 +2985,10 @@ packages:
   space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
 
+  spex@3.4.1:
+    resolution: {integrity: sha512-Br0Mu3S+c70kr4keXF+6K4B8ohR+aJjI9s7SbdsI3hliE1Riz4z+FQk7FQL+r7X1t90KPkpuKwQyITpCIQN9mg==}
+    engines: {node: '>=14.0.0'}
+
   split2@4.2.0:
     resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
     engines: {node: '>= 10.x'}
@@ -3208,6 +3256,11 @@ packages:
     peerDependencies:
       zod: ^3.24.1
 
+  zod-to-json-schema@3.24.6:
+    resolution: {integrity: sha512-h/z3PKvcTcTetyjl1fkj79MHNEjm+HpD6NXheWjzOekY7kV+lwDYnHw+ivHkijnCSMz1yJaWBD9vu/Fcmk+vEg==}
+    peerDependencies:
+      zod: ^3.24.1
+
   zod@3.25.67:
     resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
 
@@ -3248,7 +3301,7 @@ snapshots:
       '@ai-sdk/provider': 1.1.3
       '@ai-sdk/provider-utils': 2.2.8(zod@3.25.67)
       zod: 3.25.67
-      zod-to-json-schema: 3.24.5(zod@3.25.67)
+      zod-to-json-schema: 3.24.6(zod@3.25.67)
 
   '@ampproject/remapping@2.3.0':
     dependencies:
@@ -4005,12 +4058,12 @@ snapshots:
     dependencies:
       '@lukeed/csprng': 1.1.0
 
-  '@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)':
+  '@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)':
     dependencies:
       '@ai-sdk/provider': 1.1.3
       '@ai-sdk/provider-utils': 2.2.8(zod@3.25.67)
       '@ai-sdk/ui-utils': 1.2.11(zod@3.25.67)
-      '@mastra/schema-compat': 0.10.2(ai@4.3.16(react@19.1.0)(zod@3.25.67))(zod@3.25.67)
+      '@mastra/schema-compat': 0.10.3(ai@4.3.16(react@19.1.0)(zod@3.25.67))(zod@3.25.67)
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/auto-instrumentations-node': 0.59.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@2.0.1(@opentelemetry/api@1.9.0))
       '@opentelemetry/core': 2.0.1(@opentelemetry/api@1.9.0)
@@ -4039,6 +4092,7 @@ snapshots:
       sift: 17.1.3
       xstate: 5.20.0
       zod: 3.25.67
+      zod-to-json-schema: 3.24.6(zod@3.25.67)
     transitivePeerDependencies:
       - '@hono/arktype-validator'
       - '@hono/effect-validator'
@@ -4057,12 +4111,12 @@ snapshots:
       - valibot
       - zod-openapi
 
-  '@mastra/deployer@0.10.6(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(typescript@5.8.3)':
+  '@mastra/deployer@0.10.6(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(typescript@5.8.3)':
     dependencies:
       '@babel/core': 7.27.4
       '@babel/helper-module-imports': 7.27.1
-      '@mastra/core': 0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
-      '@mastra/server': 0.10.6(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)
+      '@mastra/core': 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
+      '@mastra/server': 0.10.6(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)
       '@neon-rs/load': 0.1.82
       '@rollup/plugin-alias': 5.1.1(rollup@4.44.0)
       '@rollup/plugin-commonjs': 28.0.6(rollup@4.44.0)
@@ -4088,23 +4142,23 @@ snapshots:
       - supports-color
       - typescript
 
-  '@mastra/libsql@0.10.3(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))':
+  '@mastra/libsql@0.10.3(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))':
     dependencies:
       '@libsql/client': 0.15.9
-      '@mastra/core': 0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
+      '@mastra/core': 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@mastra/loggers@0.10.2(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))':
+  '@mastra/loggers@0.10.2(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))':
     dependencies:
-      '@mastra/core': 0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
+      '@mastra/core': 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
       pino: 9.7.0
       pino-pretty: 13.0.0
 
-  '@mastra/mcp@0.10.4(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)':
+  '@mastra/mcp@0.10.4(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)':
     dependencies:
-      '@mastra/core': 0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
+      '@mastra/core': 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
       '@modelcontextprotocol/sdk': 1.13.0
       date-fns: 4.1.0
       exit-hook: 4.0.0
@@ -4116,9 +4170,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mastra/memory@0.10.4(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(react@19.1.0)':
+  '@mastra/memory@0.10.4(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(react@19.1.0)':
     dependencies:
-      '@mastra/core': 0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
+      '@mastra/core': 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
       '@upstash/redis': 1.35.0
       ai: 4.3.16(react@19.1.0)(zod@3.25.67)
       js-tiktoken: 1.0.20
@@ -4133,17 +4187,28 @@ snapshots:
       - pg-native
       - react
 
-  '@mastra/schema-compat@0.10.2(ai@4.3.16(react@19.1.0)(zod@3.25.67))(zod@3.25.67)':
+  '@mastra/pg@0.12.0(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(pg-query-stream@4.8.1(pg@8.14.1))':
+    dependencies:
+      '@mastra/core': 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
+      async-mutex: 0.5.0
+      pg: 8.16.2
+      pg-promise: 11.14.0(pg-query-stream@4.8.1(pg@8.14.1))
+      xxhash-wasm: 1.1.0
+    transitivePeerDependencies:
+      - pg-native
+      - pg-query-stream
+
+  '@mastra/schema-compat@0.10.3(ai@4.3.16(react@19.1.0)(zod@3.25.67))(zod@3.25.67)':
     dependencies:
       ai: 4.3.16(react@19.1.0)(zod@3.25.67)
       json-schema: 0.4.0
       zod: 3.25.67
       zod-from-json-schema: 0.0.5
-      zod-to-json-schema: 3.24.5(zod@3.25.67)
+      zod-to-json-schema: 3.24.6(zod@3.25.67)
 
-  '@mastra/server@0.10.6(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)':
+  '@mastra/server@0.10.6(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)':
     dependencies:
-      '@mastra/core': 0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
+      '@mastra/core': 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
       zod: 3.25.67
 
   '@modelcontextprotocol/sdk@1.13.0':
@@ -5526,6 +5591,12 @@ snapshots:
 
   argparse@2.0.1: {}
 
+  assert-options@0.8.3: {}
+
+  async-mutex@0.5.0:
+    dependencies:
+      tslib: 2.8.1
+
   async@2.6.4:
     dependencies:
       lodash: 4.17.21
@@ -6269,14 +6340,14 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  mastra@0.10.6(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(@opentelemetry/api@1.9.0)(react@19.1.0)(typescript@5.8.3):
+  mastra@0.10.6(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(@opentelemetry/api@1.9.0)(react@19.1.0)(typescript@5.8.3):
     dependencies:
       '@clack/prompts': 0.11.0
       '@lukeed/uuid': 2.0.1
-      '@mastra/core': 0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
-      '@mastra/deployer': 0.10.6(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(typescript@5.8.3)
-      '@mastra/loggers': 0.10.2(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))
-      '@mastra/mcp': 0.10.4(@mastra/core@0.10.6(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)
+      '@mastra/core': 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
+      '@mastra/deployer': 0.10.6(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(typescript@5.8.3)
+      '@mastra/loggers': 0.10.2(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))
+      '@mastra/mcp': 0.10.4(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)
       '@opentelemetry/instrumentation': 0.202.0(@opentelemetry/api@1.9.0)
       '@webcontainer/env': 1.1.1
       commander: 12.1.0
@@ -6450,13 +6521,38 @@ snapshots:
 
   pg-connection-string@2.9.1: {}
 
+  pg-cursor@2.15.2(pg@8.14.1):
+    dependencies:
+      pg: 8.14.1
+
   pg-int8@1.0.1: {}
+
+  pg-minify@1.7.0: {}
+
+  pg-pool@3.10.1(pg@8.14.1):
+    dependencies:
+      pg: 8.14.1
 
   pg-pool@3.10.1(pg@8.16.2):
     dependencies:
       pg: 8.16.2
 
+  pg-promise@11.14.0(pg-query-stream@4.8.1(pg@8.14.1)):
+    dependencies:
+      assert-options: 0.8.3
+      pg: 8.14.1
+      pg-minify: 1.7.0
+      pg-query-stream: 4.8.1(pg@8.14.1)
+      spex: 3.4.1
+    transitivePeerDependencies:
+      - pg-native
+
   pg-protocol@1.10.2: {}
+
+  pg-query-stream@4.8.1(pg@8.14.1):
+    dependencies:
+      pg: 8.14.1
+      pg-cursor: 2.15.2(pg@8.14.1)
 
   pg-types@2.2.0:
     dependencies:
@@ -6465,6 +6561,16 @@ snapshots:
       postgres-bytea: 1.0.0
       postgres-date: 1.0.7
       postgres-interval: 1.2.0
+
+  pg@8.14.1:
+    dependencies:
+      pg-connection-string: 2.9.1
+      pg-pool: 3.10.1(pg@8.14.1)
+      pg-protocol: 1.10.2
+      pg-types: 2.2.0
+      pgpass: 1.0.5
+    optionalDependencies:
+      pg-cloudflare: 1.2.6
 
   pg@8.16.2:
     dependencies:
@@ -6841,6 +6947,8 @@ snapshots:
 
   space-separated-tokens@2.0.2: {}
 
+  spex@3.4.1: {}
+
   split2@4.2.0: {}
 
   stack-trace@0.0.10: {}
@@ -7070,6 +7178,10 @@ snapshots:
       zod: 3.25.67
 
   zod-to-json-schema@3.24.5(zod@3.25.67):
+    dependencies:
+      zod: 3.25.67
+
+  zod-to-json-schema@3.24.6(zod@3.25.67):
     dependencies:
       zod: 3.25.67
 

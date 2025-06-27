@@ -5,10 +5,11 @@ import { LibSQLStore } from '@mastra/libsql';
 import { weatherWorkflow } from './workflows/weather-workflow';
 import { weatherAgent } from './agents/weather-agent';
 import { quoteAgent } from './agents/quote-agent';
+import { flightTrackerAgent } from './agents/flight-tracker-agent';
 
 export const mastra = new Mastra({
   workflows: { weatherWorkflow },
-  agents: { weatherAgent, quoteAgent },
+  agents: { weatherAgent, quoteAgent, flightTrackerAgent },
   storage: new LibSQLStore({
     // stores telemetry, evals, ... into memory storage, if it needs to persist, change to file:../mastra.db
     url: ":memory:",

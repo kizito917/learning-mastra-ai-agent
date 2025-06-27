@@ -15,4 +15,9 @@ export const quoteAgent = new Agent({
     `,
     model: openai('gpt-4o-mini'),
     tools: { quoteTool },
+    memory: new Memory({
+        storage: new LibSQLStore({
+            url: 'file:../mastra.db',
+        })
+    })
 })
