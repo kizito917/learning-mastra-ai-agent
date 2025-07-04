@@ -19,6 +19,9 @@ const memory = new Memory({
         user,
         database,
         password,
+        ssl: {
+            rejectUnauthorized: false
+        }
     })
 });
 
