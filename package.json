@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run watch-static\" \"mastra dev\"",
-    "build": "mastra build && pnpm run copy-static",
+    "build": "mastra build && pnpm run watch-static",
     "start": "concurrently \"npm run watch-static\" \"mastra start\"",
     "watch-static": "tsx scripts/watch-static.ts",
     "dev:static": "npm run watch-static"
