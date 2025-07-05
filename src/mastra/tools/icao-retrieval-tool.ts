@@ -2,8 +2,7 @@
 import { createTool } from "@mastra/core";
 import { z } from 'zod';
 import { readFile } from 'fs/promises';
-import { join, dirname } from "path";
-import { fileURLToPath } from 'url';
+import { join } from "path";
 
 export const icaoRetrievalTool = createTool({
     id: 'get-airport-icao',
@@ -37,15 +36,13 @@ async function parseAirports(csvFilePath: string) {
                 };
             });
     } catch (error: any) {
+        console.log(error);
         throw new Error('Error reading CSV file:', error);
     }
 }
 
 const getIcaoCode = async (airportName: string) => {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = dirname(__filename);
-    
-    const csvPath = join(__dirname, '../../../src/utils/airport-list.csv');
+    const csvPath = join(process.cwd(), 'utils/airport-list.csv');
     console.log("================== CSV PATH ==================", csvPath);
     const airports = await parseAirports(csvPath);
     const retrievedAirport = await airports.filter((airport) => airport.name === airportName || airport.name.includes(airportName));

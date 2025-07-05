@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "mastra dev && pnpm copy-assets",
-    "build": "mastra build",
-    "start": "mastra start",
-    "copy-assets": "mkdir -p .mastra/output/src/utils && cp src/utils/airport-list.csv .mastra/output/src/utils/airport-list.csv"
+    "dev": "concurrently \"npm run watch-static\" \"mastra dev\"",
+    "build": "mastra build && pnpm run copy-static",
+    "start": "concurrently \"npm run watch-static\" \"mastra start\"",
+    "watch-static": "tsx scripts/watch-static.ts",
+    "dev:static": "npm run watch-static"
   },
   "keywords": [],
   "author": "",
@@ -25,13 +26,21 @@
     "@mastra/memory": "^0.10.4",
     "@mastra/pg": "^0.12.0",
     "@mastra/server": "^0.10.10",
+    "chokidar": "^4.0.3",
     "dotenv": "^17.0.1",
+    "path": "^0.12.7",
+    "url": "^0.11.4",
     "uuid": "^11.1.0",
     "zod": "^3.25.67"
   },
   "devDependencies": {
+    "@types/chokidar": "^2.1.7",
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "^24.0.3",
+    "concurrently": "^9.2.0",
+    "fs-extra": "^11.3.0",
     "mastra": "^0.10.6",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }
 }
