@@ -25,7 +25,16 @@ importers:
         version: 0.10.4(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(react@19.1.0)
       '@mastra/pg':
         specifier: ^0.12.0
-        version: 0.12.0(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(pg-query-stream@4.8.1(pg@8.14.1))
+        version: 0.12.0(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(pg-query-stream@4.8.1(pg@8.16.2))
+      '@mastra/server':
+        specifier: ^0.10.10
+        version: 0.10.10(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)
+      dotenv:
+        specifier: ^17.0.1
+        version: 17.0.1
+      uuid:
+        specifier: ^11.1.0
+        version: 11.1.0
       zod:
         specifier: ^3.25.67
         version: 3.25.67
@@ -590,10 +599,10 @@ packages:
       ai: ^4.0.0
       zod: ^3.0.0
 
-  '@mastra/server@0.10.6':
-    resolution: {integrity: sha512-7tiNSRs0qaeL+rWEBs+h+LH/obyatTvAPA4FG0/qtJq6tJXs4Sez01LOkBaDj4Z6k1volPc88EXJz6g+yxRVvQ==}
+  '@mastra/server@0.10.10':
+    resolution: {integrity: sha512-dzPSMinu02xFV5z9KzF/I+IG+UWgR5sTSqMWe/sjp6lrZGWFacsRe6oT4plJtig9f2xkCQJyRVmJ2zgKUk1mNw==}
     peerDependencies:
-      '@mastra/core': ^0.10.2-alpha.0
+      '@mastra/core': '>=0.10.9-0 <0.11.0-0'
       zod: ^3.0.0
 
   '@modelcontextprotocol/sdk@1.13.0':
@@ -1917,6 +1926,10 @@ packages:
 
   dotenv@16.5.0:
     resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
+    engines: {node: '>=12'}
+
+  dotenv@17.0.1:
+    resolution: {integrity: sha512-GLjkduuAL7IMJg/ZnOPm9AnWKJ82mSE2tzXLaJ/6hD6DhwGfZaXG77oB8qbReyiczNxnbxQKyh0OE5mXq0bAHA==}
     engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
@@ -4116,7 +4129,7 @@ snapshots:
       '@babel/core': 7.27.4
       '@babel/helper-module-imports': 7.27.1
       '@mastra/core': 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
-      '@mastra/server': 0.10.6(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)
+      '@mastra/server': 0.10.10(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)
       '@neon-rs/load': 0.1.82
       '@rollup/plugin-alias': 5.1.1(rollup@4.44.0)
       '@rollup/plugin-commonjs': 28.0.6(rollup@4.44.0)
@@ -4187,12 +4200,12 @@ snapshots:
       - pg-native
       - react
 
-  '@mastra/pg@0.12.0(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(pg-query-stream@4.8.1(pg@8.14.1))':
+  '@mastra/pg@0.12.0(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(pg-query-stream@4.8.1(pg@8.16.2))':
     dependencies:
       '@mastra/core': 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
       async-mutex: 0.5.0
       pg: 8.16.2
-      pg-promise: 11.14.0(pg-query-stream@4.8.1(pg@8.14.1))
+      pg-promise: 11.14.0(pg-query-stream@4.8.1(pg@8.16.2))
       xxhash-wasm: 1.1.0
     transitivePeerDependencies:
       - pg-native
@@ -4206,7 +4219,7 @@ snapshots:
       zod-from-json-schema: 0.0.5
       zod-to-json-schema: 3.24.6(zod@3.25.67)
 
-  '@mastra/server@0.10.6(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)':
+  '@mastra/server@0.10.10(@mastra/core@0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67))(zod@3.25.67)':
     dependencies:
       '@mastra/core': 0.10.8(openapi-types@12.1.3)(react@19.1.0)(zod@3.25.67)
       zod: 3.25.67
@@ -5815,6 +5828,8 @@ snapshots:
 
   dotenv@16.5.0: {}
 
+  dotenv@17.0.1: {}
+
   dunder-proto@1.0.1:
     dependencies:
       call-bind-apply-helpers: 1.0.2
@@ -6521,9 +6536,9 @@ snapshots:
 
   pg-connection-string@2.9.1: {}
 
-  pg-cursor@2.15.2(pg@8.14.1):
+  pg-cursor@2.15.2(pg@8.16.2):
     dependencies:
-      pg: 8.14.1
+      pg: 8.16.2
 
   pg-int8@1.0.1: {}
 
@@ -6537,22 +6552,22 @@ snapshots:
     dependencies:
       pg: 8.16.2
 
-  pg-promise@11.14.0(pg-query-stream@4.8.1(pg@8.14.1)):
+  pg-promise@11.14.0(pg-query-stream@4.8.1(pg@8.16.2)):
     dependencies:
       assert-options: 0.8.3
       pg: 8.14.1
       pg-minify: 1.7.0
-      pg-query-stream: 4.8.1(pg@8.14.1)
+      pg-query-stream: 4.8.1(pg@8.16.2)
       spex: 3.4.1
     transitivePeerDependencies:
       - pg-native
 
   pg-protocol@1.10.2: {}
 
-  pg-query-stream@4.8.1(pg@8.14.1):
+  pg-query-stream@4.8.1(pg@8.16.2):
     dependencies:
-      pg: 8.14.1
-      pg-cursor: 2.15.2(pg@8.14.1)
+      pg: 8.16.2
+      pg-cursor: 2.15.2(pg@8.16.2)
 
   pg-types@2.2.0:
     dependencies:

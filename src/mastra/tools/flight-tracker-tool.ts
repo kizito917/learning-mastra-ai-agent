@@ -13,7 +13,8 @@ export const flightTrackerTool = createTool({
 })
 
 const getRecentFlightInfo = async (flightNumber: string) => {
-    const url = `${process.env.AERODATABOX_API_BASE_URL}/number/${flightNumber}?withAircraftImage=false&withLocation=false`;
+    console.log("================= CALLING THE FLIGHT STATUS/INFO TOOL =========", flightNumber);
+    const url = `${process.env.AERODATABOX_API_BASE_URL}/flights/number/${flightNumber}?withAircraftImage=false&withLocation=false`;
     const options = {
         method: 'GET',
         headers: {

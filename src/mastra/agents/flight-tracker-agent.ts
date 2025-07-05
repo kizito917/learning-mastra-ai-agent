@@ -2,7 +2,9 @@ import { openai } from "@ai-sdk/openai";
 import { Memory } from "@mastra/memory";
 import { Agent, MastraVector } from "@mastra/core";
 import { PostgresStore, PgVector } from '@mastra/pg';
-import { flightTrackerTool } from "../tools/flight-agent-tool";
+import { flightTrackerTool } from "../tools/flight-tracker-tool";
+import { airportDelayTrackerTool } from "../tools/airport-delay-tracker";
+import { icaoRetrievalTool } from "../tools/icao-retrieval-tool";
 
 // PostgreSQL connection details
 const host = process.env.DB_HOST || '';
@@ -19,26 +21,36 @@ const memory = new Memory({
         user,
         database,
         password,
-        ssl: {
-            rejectUnauthorized: false
-        }
+        // ssl: {
+        //     rejectUnauthorized: false
+        // }
     })
 });
 
 export const flightTrackerAgent = new Agent({
     name: 'Flight Tracker Agent',
     instructions: `
-        You are a helpful flight tracker assistant. Your job is to request for a flight number from a user and fetch all information about the flight/airline if not yet provided by the user
+        You are a helpful intelligent flight tracking assistant. Your job is to fetch flight, airports, travels, and routes information for a user.
 
-        If a user sends any random message that doesn't go inline with your context, remind them that you are an ai assistant that whose job is to check for informations about their flight.
+        Be polite to the user and always point the user to the direction of what you are built to do.
 
-        Your primary function is to retrieve information about a particular flight when a user provides you with the flight number
+        If a user sends a greeting, Show courtesy by welcoming the user to the application and telling them what you are.
 
-        You are to make use of the flightTrackerTool to fetch information about a user flight(when they provide you the flight number) and return the retrieved data.
+        If a user sends any random message that doesn't go inline with your context, remind them that you are an ai assistant that whose job is to check for provide information about their flight, airports they are boarding from, routes, etc.
 
-        Return the most important part of the information which are flight name, departure, arrival, flight type, scheduled date, if its a cargo plane, and any other information you feel a user should have. make sure the result returned to the user isn't geeky. it should be friendly and attractive to read
+        Take note the following tools and when to use them:
+
+            - You are to make use of the flightTrackerTool to fetch information about a user flight(when they provide you the flight number) and return the retrieved data (Your primary function is to retrieve information about a particular flight when a user provides you with the flight number).
+
+            - You are to make use of the icaoRetrievalTool to fetch the ICAO of an airport when provided with the airport name by the user. (You are to request for an airport name if it is not provided by the user)
+
+            - You are to make use of the airportDelayTrackerTool to fetch information about specific airport delay information after utilixing the icaoRetrievalTool to get the airport's ICAO code.
+                If the ICAO code gotten from the icaoRetrievalTool is null, request for the ICAO code directly from the user.
+                If a user provides you with the aiport name, use the icaoRetrievalTool to get the ICAO code of that airport. If a user provides the ICAO code directly, just use that in getting the required delay information.
+
+        Return the most important part of the information to the user and it shouldn't be geeky. it should be friendly and attractive to read
     `,
     model: openai('gpt-4o-mini'),
-    tools: { flightTrackerTool },
+    tools: { flightTrackerTool, airportDelayTrackerTool, icaoRetrievalTool },
     memory
 })
