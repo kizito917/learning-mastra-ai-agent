@@ -10,22 +10,23 @@ const __dirname = dirname(__filename);
 
 console.log('🔍 Starting static file watcher...');
 
-// Ensure the output directory exists
+// Paths
+const sourceDir = path.join(__dirname, '../src/utils');
 const outputDir = path.join(__dirname, '../.mastra/output/utils');
+const mastraOutputDir = path.join(__dirname, '../.mastra/output');
+
+// Ensure the output directory exists
 await fs.ensureDir(outputDir);
 
 // Copy all files initially
 copyAllFiles();
 
 // Watch for changes in src/utils
-const sourceDir = path.join(__dirname, '../src/utils');
-
 watch(sourceDir, { recursive: true }, (eventType, filename) => {
   if (filename) {
     const fullPath = path.join(sourceDir, filename);
     
     if (eventType === 'change' || eventType === 'rename') {
-      // Check if file exists (rename can be delete or create)
       if (fs.existsSync(fullPath)) {
         copyFile(fullPath, 'changed');
       } else {
@@ -35,14 +36,28 @@ watch(sourceDir, { recursive: true }, (eventType, filename) => {
   }
 });
 
-console.log('✅ Watching for changes in src/utils...');
+// Watch for Mastra rebuilds (when .mastra/output directory changes)
+if (fs.existsSync(mastraOutputDir)) {
+  watch(mastraOutputDir, { recursive: false }, (eventType, filename) => {
+    // When Mastra rebuilds, it often creates/modifies files in the output directory
+    if (eventType === 'change' || eventType === 'rename') {
+      console.log('🔄 Mastra rebuild detected, re-copying utils...');
+      setTimeout(() => {
+        // Ensure output directory exists after rebuild
+        fs.ensureDirSync(outputDir);
+        copyAllFiles();
+      }, 2000); // Wait 2 seconds to ensure Mastra build is complete
+    }
+  });
+}
+
+console.log('✅ Watching for changes in src/utils and Mastra rebuilds...');
 
 function copyFile(filePath: string, action: string): void {
-  const relativePath = path.relative(path.join(__dirname, '../src/utils'), filePath);
-  const targetPath = path.join(__dirname, '../.mastra/output/utils', relativePath);
+  const relativePath = path.relative(sourceDir, filePath);
+  const targetPath = path.join(outputDir, relativePath);
   
   try {
-    // Ensure target directory exists
     fs.ensureDirSync(path.dirname(targetPath));
     fs.copySync(filePath, targetPath);
     console.log(`📄 File ${action}: ${relativePath}`);
@@ -52,8 +67,8 @@ function copyFile(filePath: string, action: string): void {
 }
 
 function removeFile(filePath: string): void {
-  const relativePath = path.relative(path.join(__dirname, '../src/utils'), filePath);
-  const targetPath = path.join(__dirname, '../.mastra/output/utils', relativePath);
+  const relativePath = path.relative(sourceDir, filePath);
+  const targetPath = path.join(outputDir, relativePath);
   
   try {
     if (fs.existsSync(targetPath)) {
@@ -67,11 +82,8 @@ function removeFile(filePath: string): void {
 
 function copyAllFiles(): void {
   try {
-    const sourceDir = path.join(__dirname, '../src/utils');
-    const targetDir = path.join(__dirname, '../.mastra/output/utils');
-    
     if (fs.existsSync(sourceDir)) {
-      fs.copySync(sourceDir, targetDir);
+      fs.copySync(sourceDir, outputDir);
       console.log(`📁 All files copied from src/utils to .mastra/output/utils`);
     }
   } catch (err) {
