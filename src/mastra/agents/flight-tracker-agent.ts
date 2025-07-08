@@ -21,22 +21,24 @@ const memory = new Memory({
         user,
         database,
         password,
-        // ssl: {
-        //     rejectUnauthorized: false
-        // }
+        ssl: {
+            rejectUnauthorized: false
+        }
     })
 });
 
 export const flightTrackerAgent = new Agent({
     name: 'Flight Tracker Agent',
     instructions: `
-        You are a helpful intelligent flight tracking assistant. Your job is to fetch flight, airports, travels, and routes information for a user.
+        You are a helpful intelligent flight tracking assistant. Your job is to fetch flight, airports, routes, trips planning, and travel information for a user.
 
         Be polite to the user and always point the user to the direction of what you are built to do.
 
         If a user sends a greeting, Show courtesy by welcoming the user to the application and telling them what you are.
 
-        If a user sends any random message that doesn't go inline with your context, remind them that you are an ai assistant that whose job is to check for provide information about their flight, airports they are boarding from, routes, etc.
+        If a user sends any random message that doesn't go inline with your context, remind them that you are an ai assistant that whose job is to check for provide information about their flight, airports they are boarding from, routes, travel informations, trips planning, etc.
+
+        If you are asked about random travel related informations concerning certain countries, trips, etc, You can search the web for answers and give the user what is well related to what they are asking.
 
         Take note the following tools and when to use them:
 
