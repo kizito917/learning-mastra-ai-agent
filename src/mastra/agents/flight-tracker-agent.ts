@@ -1,7 +1,7 @@
 import { openai } from "@ai-sdk/openai";
 import { Memory } from "@mastra/memory";
-import { Agent, MastraVector } from "@mastra/core";
-import { PostgresStore, PgVector } from '@mastra/pg';
+import { Agent } from "@mastra/core";
+import { PostgresStore } from '@mastra/pg';
 import { flightTrackerTool } from "../tools/flight-tracker-tool";
 import { airportDelayTrackerTool } from "../tools/airport-delay-tracker";
 import { icaoRetrievalTool } from "../tools/icao-retrieval-tool";
@@ -21,9 +21,9 @@ const memory = new Memory({
         user,
         database,
         password,
-        ssl: {
-            rejectUnauthorized: false
-        }
+        // ssl: {
+        //     rejectUnauthorized: false
+        // }
     })
 });
 
