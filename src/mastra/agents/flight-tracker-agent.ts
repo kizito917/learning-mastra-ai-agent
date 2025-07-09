@@ -2,8 +2,8 @@ import { openai } from "@ai-sdk/openai";
 import { Memory } from "@mastra/memory";
 import { Agent } from "@mastra/core";
 import { PostgresStore } from '@mastra/pg';
-import { flightTrackerTool } from "../tools/flight-tracker-tool";
-import { airportDelayTrackerTool } from "../tools/airport-delay-tracker";
+import { flightTrackerTool } from "../tools/flight-info-tool";
+import { airportDelayTrackerTool, airportAndFlightDailyRouteTool } from "../tools/airport-info-tool";
 import { icaoRetrievalTool } from "../tools/icao-retrieval-tool";
 
 // PostgreSQL connection details
@@ -12,7 +12,6 @@ const port = process.env.DB_PORT || 5432;
 const user = process.env.DB_USER || '';
 const database = process.env.DB_NAME || '';
 const password = process.env.DB_PASSWORD || '';
-const connectionString = process.env.DB_URI || '';
 
 const memory = new Memory({
     storage: new PostgresStore({
@@ -21,9 +20,9 @@ const memory = new Memory({
         user,
         database,
         password,
-        ssl: {
-            rejectUnauthorized: false
-        }
+        // ssl: {
+        //     rejectUnauthorized: false
+        // }
     })
 });
 
@@ -50,9 +49,14 @@ export const flightTrackerAgent = new Agent({
                 If the ICAO code gotten from the icaoRetrievalTool is null, request for the ICAO code directly from the user.
                 If a user provides you with the aiport name, use the icaoRetrievalTool to get the ICAO code of that airport. If a user provides the ICAO code directly, just use that in getting the required delay information.
 
+            - You are to make use of the airportAndFlightDailyRouteTool to retrieve daily itinerary, and routes of a particular airport and all the flights in the airport for that day. To achieve this, you will be making use of the airport ICAO code.
+                Do not ask user for sn ICAO code. 
+                If the user gives you the airport name, use the icaoRetrievalTool to fetch the ICAO code of the airport and proceed to getting the daily routes
+                If a user provides the airport ICAO code, use the airportAndFlightDailyRouteTool directly to retrieve all routes for the requested airport and all flights for that airport as well.
+
         Return the most important part of the information to the user and it shouldn't be geeky. it should be friendly and attractive to read
     `,
     model: openai('gpt-4o-mini'),
-    tools: { flightTrackerTool, airportDelayTrackerTool, icaoRetrievalTool },
+    tools: { flightTrackerTool, airportDelayTrackerTool, icaoRetrievalTool, airportAndFlightDailyRouteTool },
     memory
 })
