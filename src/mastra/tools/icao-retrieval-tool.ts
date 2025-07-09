@@ -36,7 +36,6 @@ async function parseAirports(csvFilePath: string) {
                 };
             });
     } catch (error: any) {
-        console.log(error);
         throw new Error('Error reading CSV file:', error);
     }
 }

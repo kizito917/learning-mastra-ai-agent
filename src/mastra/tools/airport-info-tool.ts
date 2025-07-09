@@ -1,7 +1,14 @@
+// External imports
 import { createTool } from "@mastra/core";
 import { z } from "zod";
+
+// Internal imports
 import { formattedAirportAndFlightRouteSchema } from "../schema/airport";
-import { formatAirportAndFlightStatsResult } from "../helpers/airport";
+import { 
+    getAirportDailyRoutesAndFlight, 
+    getDelayInfo, 
+    getAllAirportsOfSpecificLocation 
+} from "../controllers/airport";
 
 export const airportDelayTrackerTool = createTool({
     id: 'get-airport-delay-info',
@@ -26,49 +33,14 @@ export const airportAndFlightDailyRouteTool = createTool({
     }
 })
 
-const getDelayInfo = async (airportIcaoCode: string) => {
-    console.log("================= CALLING THE AIPORT DELAY TOOL =========", airportIcaoCode);
-    const url = `${process.env.AERODATABOX_API_BASE_URL}/airports/icao/${airportIcaoCode}/delays`;
-    const options = {
-        method: 'GET',
-        headers: {
-            'x-rapidapi-key': process.env.AERODATABOX_API_KEY || '',
-            'x-rapidapi-host': process.env.AERODATABOX_API_HOST || ''
-        }
-    };
-
-    try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        console.log(result);
-
-        return result;
-    } catch (error) {
-        console.log(error);
-        return { }
+export const retrieveAirportsByLocationTool = createTool({
+    id: 'retrieve-airports-by-location',
+    description: 'Retrieve all available airports of a specific location',
+    inputSchema: z.object({
+        latitude: z.string().min(1),
+        longitude: z.string().min(1)
+    }),
+    execute: async ({ context }) => {
+        return await getAllAirportsOfSpecificLocation(context.latitude, context.longitude)
     }
-}
-
-const getAirportDailyRoutesAndFlight = async (airportIcaoCode: string) => {
-    console.log("================= CALLING THE AIPORT & FLIGHT DAILY ROUTE TOOL =========", airportIcaoCode);
-    const url = `${process.env.AERODATABOX_API_BASE_URL}/airports/icao/${airportIcaoCode}/stats/routes/daily`;
-    const options = {
-        method: 'GET',
-        headers: {
-            'x-rapidapi-key': process.env.AERODATABOX_API_KEY || '',
-            'x-rapidapi-host': process.env.AERODATABOX_API_HOST || ''
-        }
-    };
-
-    try {
-        const response = await fetch(url, options);
-        const result = await response.json();
-        const formattedResult = await formatAirportAndFlightStatsResult(result.routes);
-        console.log(formattedResult);
-
-        return formattedResult;
-    } catch (error) {
-        console.log(error);
-        return []
-    }
-}
+})

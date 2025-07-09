@@ -3,8 +3,9 @@ import { Memory } from "@mastra/memory";
 import { Agent } from "@mastra/core";
 import { PostgresStore } from '@mastra/pg';
 import { flightTrackerTool } from "../tools/flight-info-tool";
-import { airportDelayTrackerTool, airportAndFlightDailyRouteTool } from "../tools/airport-info-tool";
+import { airportDelayTrackerTool, airportAndFlightDailyRouteTool, retrieveAirportsByLocationTool } from "../tools/airport-info-tool";
 import { icaoRetrievalTool } from "../tools/icao-retrieval-tool";
+import { mcp } from "../mcp";
 
 // PostgreSQL connection details
 const host = process.env.DB_HOST || '';
@@ -26,16 +27,23 @@ const memory = new Memory({
     })
 });
 
+const mcpTools = await mcp.getTools();
+
 export const flightTrackerAgent = new Agent({
     name: 'Flight Tracker Agent',
     instructions: `
-        You are a helpful intelligent flight tracking assistant. Your job is to fetch flight, airports, routes, trips planning, and travel information for a user.
+        You are a helpful intelligent flight tracking assistant. Your job is to do the following:
+            - Fetch flight status and details
+            - Fetch airports and airport delay information, 
+            - fetch available routes for an airport/flight, 
+            - Plan trips and travels for a user,
+            - provide travel informations from the internet for a user.
 
         Be polite to the user and always point the user to the direction of what you are built to do.
 
         If a user sends a greeting, Show courtesy by welcoming the user to the application and telling them what you are.
 
-        If a user sends any random message that doesn't go inline with your context, remind them that you are an ai assistant that whose job is to check for provide information about their flight, airports they are boarding from, routes, travel informations, trips planning, etc.
+        If a user sends any random message that doesn't go inline with your context, remind them that you are an AI assistant and also remind them of the job you are capable of handling.
 
         If you are asked about random travel related informations concerning certain countries, trips, etc, You can search the web for answers and give the user what is well related to what they are asking.
 
@@ -54,9 +62,21 @@ export const flightTrackerAgent = new Agent({
                 If the user gives you the airport name, use the icaoRetrievalTool to fetch the ICAO code of the airport and proceed to getting the daily routes
                 If a user provides the airport ICAO code, use the airportAndFlightDailyRouteTool directly to retrieve all routes for the requested airport and all flights for that airport as well.
 
+            - You are to make use of the ipinfo_get_ip_details tool to get the latitude and longitude of a user ip address
+
+            - You are to use the retrieveAirportsByLocationTool to retrieve all available airports of a specific location. This tool requires a latitude and longitude and that is gotten from the result of the ipinfo_get_ip_details tool
+                When a user request to get all airport of a location. use their ip address to get the latitude and longitude via the ipinfo_get_ip_details tool
+
         Return the most important part of the information to the user and it shouldn't be geeky. it should be friendly and attractive to read
     `,
     model: openai('gpt-4o-mini'),
-    tools: { flightTrackerTool, airportDelayTrackerTool, icaoRetrievalTool, airportAndFlightDailyRouteTool },
+    tools: { 
+        ...mcpTools,
+        flightTrackerTool, 
+        airportDelayTrackerTool, 
+        icaoRetrievalTool, 
+        airportAndFlightDailyRouteTool,
+        retrieveAirportsByLocationTool
+    },
     memory
 })
