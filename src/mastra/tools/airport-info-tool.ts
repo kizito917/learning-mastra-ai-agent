@@ -1,6 +1,6 @@
 import { createTool } from "@mastra/core";
 import { z } from "zod";
-import { FlightAndAirportRoutesSchema, formattedAirportAndFlightRouteSchema } from "../schema/airport";
+import { formattedAirportAndFlightRouteSchema } from "../schema/airport";
 import { formatAirportAndFlightStatsResult } from "../helpers/airport";
 
 export const airportDelayTrackerTool = createTool({
