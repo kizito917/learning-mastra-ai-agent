@@ -2,8 +2,15 @@ import { openai } from "@ai-sdk/openai";
 import { Memory } from "@mastra/memory";
 import { Agent } from "@mastra/core";
 import { PostgresStore } from '@mastra/pg';
-import { flightTrackerTool } from "../tools/flight-info-tool";
-import { airportDelayTrackerTool, airportAndFlightDailyRouteTool, retrieveAirportsByLocationTool } from "../tools/airport-info-tool";
+import { 
+    flightTrackerTool, 
+    flightDelaysInfoTool 
+} from "../tools/flight-info-tool";
+import { 
+    airportDelayTrackerTool, 
+    airportAndFlightDailyRouteTool, 
+    retrieveAirportsByLocationTool,
+} from "../tools/airport-info-tool";
 import { icaoRetrievalTool } from "../tools/icao-retrieval-tool";
 import { mcp } from "../mcp";
 
@@ -33,9 +40,10 @@ export const flightTrackerAgent = new Agent({
     name: 'Flight Tracker Agent',
     instructions: `
         You are a helpful intelligent flight tracking assistant. Your job is to do the following:
-            - Fetch flight status and details
+            - Fetch flight status and details,
             - Fetch airports and airport delay information, 
             - fetch available routes for an airport/flight, 
+            - provide current delay information for a flight via its flight number,
             - Plan trips and travels for a user,
             - provide travel informations from the internet for a user.
 
@@ -67,6 +75,9 @@ export const flightTrackerAgent = new Agent({
             - You are to use the retrieveAirportsByLocationTool to retrieve all available airports of a specific location. This tool requires a latitude and longitude and that is gotten from the result of the ipinfo_get_ip_details tool
                 When a user request to get all airport of a location. use their ip address to get the latitude and longitude via the ipinfo_get_ip_details tool
 
+            - You are to use the flightDelaysInfoTool to retrieve the flight delay information using the flight number provided by the user.
+                If a user doesn't provide a flight number, you have to ask them for one because it is required ny the tool to retrieve the delay information.
+
         Return the most important part of the information to the user and it shouldn't be geeky. it should be friendly and attractive to read
     `,
     model: openai('gpt-4o-mini'),
@@ -76,7 +87,8 @@ export const flightTrackerAgent = new Agent({
         airportDelayTrackerTool, 
         icaoRetrievalTool, 
         airportAndFlightDailyRouteTool,
-        retrieveAirportsByLocationTool
+        retrieveAirportsByLocationTool,
+        flightDelaysInfoTool
     },
     memory
 })
