@@ -1,0 +1,14 @@
+[phases.setup]
+nixPkgs = ["nodejs", "python3", "curl", "bash"]
+
+[phases.install]
+cmds = [
+    "curl -LsSf https://astral.sh/uv/install.sh | sh",
+    "export PATH=\"$HOME/.cargo/bin:$PATH\""
+]
+
+[phases.build]
+cmds = ["echo 'Build phase - uv should be installed'"]
+
+[start]
+cmd = "bash -c 'export PATH=\"$HOME/.cargo/bin:$PATH\" && pnpm run start'"
