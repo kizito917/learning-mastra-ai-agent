@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "concurrently \"npm run watch-static\" \"mastra dev\"",
     "build": "mastra build",
-    "start": "bash start.sh",
-    "start:app": "concurrently \"npm run watch-static\" \"mastra start\"",
+    "start": "concurrently \"npm run watch-static\" \"mastra start\"",
     "watch-static": "tsx scripts/watch-static.ts",
     "dev:static": "npm run watch-static"
   },
