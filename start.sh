@@ -1,21 +1,16 @@
 #!/bin/bash
-echo "=== Checking for uv ==="
+echo "=== Installing uv via pip ==="
 if ! command -v uv &> /dev/null; then
-    echo "uv not found, installing..."
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    export PATH="$HOME/.cargo/bin:$PATH"
-    echo "PATH after export: $PATH"
-    echo "Checking uv again..."
-    command -v uv
-    command -v uvx
-else
-    echo "uv found at: $(command -v uv)"
+    echo "Installing uv via pip..."
+    python3 -m pip install uv
+    
+    # Add Python user bin to PATH
+    export PATH="$HOME/.local/bin:$PATH"
+    
+    echo "PATH: $PATH"
+    echo "uv location: $(command -v uv)"
+    echo "uvx location: $(command -v uvx)"
 fi
-
-echo "=== Final PATH check ==="
-echo "PATH: $PATH"
-echo "uv location: $(command -v uv)"
-echo "uvx location: $(command -v uvx)"
 
 # Start your application
 pnpm run start:app
